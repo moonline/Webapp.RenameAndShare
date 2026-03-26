@@ -1,5 +1,7 @@
 # RenameAndShare
 
+**https://moonline.github.io/Webapp.RenameAndShare/**
+
 A minimal Progressive Web App (PWA) that acts as a rename proxy in your Android share sheet. Share a file to this app, give it a new name, and share it onward — for example to Nextcloud.
 
 No files leave your device. Renaming happens entirely in the browser.
@@ -35,7 +37,7 @@ Both modes show a live preview of the resulting filename.
 
 The app must be installed as a PWA for it to appear in the Android share sheet.
 
-1. Open the app URL in **Chrome for Android**.
+1. Open **https://moonline.github.io/Webapp.RenameAndShare/** in **Chrome for Android**.
 2. Tap the menu (⋮) in the top-right corner.
 3. Choose **Add to Home Screen** and confirm.
 4. RenameAndShare now appears in the system share sheet.
