@@ -1,6 +1,6 @@
-<img src="images/icon-rename-and-share-256.png" width="56" alt="RenameAndShare logo" align="left" style="margin-right: 14px;">
+<img src="images/icon-rename-and-share-256.png" width="56" alt="Rename &amp; Share logo" align="left" style="margin-right: 14px;">
 
-# RenameAndShare
+# Rename & Share
 
 **https://moonline.github.io/Webapp.RenameAndShare/**
 
@@ -10,7 +10,7 @@ No files leave your device. Renaming happens entirely in the browser.
 
 ## Why
 
-Mobile apps like Nextcloud do not allow renaming a file during upload. The typical workaround — rename in Files, then share — requires two separate steps in two different apps. RenameAndShare collapses that into a single share-sheet flow.
+Mobile apps like Nextcloud do not allow renaming a file during upload. The typical workaround — rename in Files, then share — requires two separate steps in two different apps. Rename & Share collapses that into a single share-sheet flow.
 
 **Flow:**
 
@@ -32,7 +32,7 @@ flowchart LR
     classDef resultNode  fill:#0d3b2e,stroke:#28a745,stroke-width:2px,color:#b8f5c8,rx:6
 
     A(["📁 Files / Downloads"]):::sourceNode
-    B(["✏️ RenameAndShare"]):::appNode
+    B(["✏️ Rename & Share"]):::appNode
     C(["☁️ Nextcloud"]):::targetNode
     D(["✅ Uploaded with new name"]):::resultNode
 
@@ -72,13 +72,13 @@ The app must be installed as a PWA for it to appear in the Android share sheet.
 1. Open **https://moonline.github.io/Webapp.RenameAndShare/** in **Chrome for Android**.
 2. Tap the menu (⋮) in the top-right corner.
 3. Choose **Add to Home Screen** and confirm.
-4. RenameAndShare now appears in the system share sheet.
+4. Rename & Share now appears in the system share sheet.
 
 ## Use
 
 1. Open your **Downloads** or **Files** app.
 2. Long-press a file and tap **Share**.
-3. Select **RenameAndShare** from the share sheet.
+3. Select **Rename & Share** from the share sheet.
 4. Enter the new name and tap **Rename & Share**.
 5. The share sheet opens again — select **Nextcloud** (or any other target).
 
