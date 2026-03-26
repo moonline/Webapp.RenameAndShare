@@ -1,3 +1,5 @@
+<img src="images/icon-rename-and-share-256.png" width="56" alt="RenameAndShare logo" align="left" style="margin-right: 14px;">
+
 # RenameAndShare
 
 **https://moonline.github.io/Webapp.RenameAndShare/**
@@ -13,11 +15,41 @@ Mobile apps like Nextcloud do not allow renaming a file during upload. The typic
 **Flow:**
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': {
+  'primaryColor': '#1e3a5f',
+  'primaryTextColor': '#e8f0fe',
+  'primaryBorderColor': '#4f8ef7',
+  'lineColor': '#4f8ef7',
+  'secondaryColor': '#0d3b66',
+  'tertiaryColor': '#1a1a2e',
+  'edgeLabelBackground': '#1a1a2e',
+  'fontSize': '15px'
+}}}%%
 flowchart LR
-    A[Downloads / Files app] -->|Share| B[RenameAndShare]
-    B -->|Rename & Share| C[Nextcloud]
-    C --> D[Pick folder & upload]
+    classDef sourceNode  fill:#1e3a5f,stroke:#4f8ef7,stroke-width:2px,color:#e8f0fe,rx:6
+    classDef appNode     fill:#0d4f8c,stroke:#4f8ef7,stroke-width:3px,color:#ffffff,font-weight:bold,rx:6
+    classDef targetNode  fill:#1e3a5f,stroke:#4f8ef7,stroke-width:2px,color:#e8f0fe,rx:6
+    classDef resultNode  fill:#0d3b2e,stroke:#28a745,stroke-width:2px,color:#b8f5c8,rx:6
+
+    A(["📁 Files / Downloads"]):::sourceNode
+    B(["✏️ RenameAndShare"]):::appNode
+    C(["☁️ Nextcloud"]):::targetNode
+    D(["✅ Uploaded with new name"]):::resultNode
+
+    A -->|"① Share"| B
+    B -->|"② Rename & Share"| C
+    C -->|"③ Pick folder & upload"| D
 ```
+
+## Screenshots
+
+<table>
+  <tr>
+    <td align="center"><img src="images/Screenshot_2026-03-26-19-04-41-869-info-screen.jpg" width="220" alt="Info screen"><br><sub>Info screen</sub></td>
+    <td align="center"><img src="images/Screenshot_2026-03-26-19-02-56-879-composed-filename.jpg" width="220" alt="Composed filename mode"><br><sub>Composed filename mode</sub></td>
+    <td align="center"><img src="images/Screenshot_2026-03-26-19-03-04-871-freetext-filename.jpg" width="220" alt="Freetext filename mode"><br><sub>Freetext filename mode</sub></td>
+  </tr>
+</table>
 
 ## Naming modes
 
