@@ -1,9 +1,4 @@
-// ── Service worker ────────────────────────────────────────────────────────────
-if ('serviceWorker' in navigator) {
-	navigator.serviceWorker
-		.register('./service-worker.js')
-		.catch(console.error);
-}
+import { initializeTranslations, translate, applyTranslations } from './i18n.js';
 
 // ── DOM refs ──────────────────────────────────────────────────────────────────
 const renameUiElement = document.getElementById('rename-ui');
@@ -80,13 +75,6 @@ function resetInputs() {
 	updatePreviews();
 }
 
-// When switching to freetext: use the current composed result (if any) as placeholder
-freetextTabButton.addEventListener('show.bs.tab', () => {
-	const composedFilename = buildComposedFilename();
-	freetextInput.placeholder = composedFilename || originalName;
-	updatePreviews();
-});
-
 // ── Load shared file from cache ───────────────────────────────────────────────
 async function loadSharedFile() {
 	if (!location.search.includes('incoming=1')) return false;
@@ -118,31 +106,33 @@ async function loadSharedFile() {
 }
 
 // ── Share renamed file ────────────────────────────────────────────────────────
-async function shareRenamed() {
+async function shareRenamedFile() {
 	const newFilename = getActiveFilename();
 	if (!newFilename || !sharedBlob) return;
 
 	if (!navigator.canShare) {
-		setStatus('Web Share API not supported in this browser.', 'text-danger');
+		setStatus(translate('errorNoShareApi'), 'text-danger');
 		return;
 	}
 
 	const renamedFile = new File([sharedBlob], newFilename, { type: sharedBlob.type });
 
 	if (!navigator.canShare({ files: [renamedFile] })) {
-		setStatus('File sharing not supported in this browser.', 'text-danger');
+		setStatus(translate('errorNoFileShare'), 'text-danger');
 		return;
 	}
 
 	try {
-		setStatus('Opening share sheet…');
+		setStatus(translate('statusOpening'));
 		await navigator.share({ files: [renamedFile] });
-		setStatus('Shared successfully.', 'text-success');
+		setStatus(translate('statusSuccess'), 'text-success');
 	} catch (error) {
 		if (error.name === 'AbortError') {
-			setStatus('Share cancelled.');
+			setStatus(translate('statusCancelled'));
+		} else if (error.name === 'NotAllowedError') {
+			setStatus(translate('errorPermissionDenied'), 'text-danger');
 		} else {
-			setStatus('Share failed: ' + error.message, 'text-danger');
+			setStatus(translate('statusShareFailed') + error.message, 'text-danger');
 		}
 	}
 }
@@ -158,12 +148,37 @@ customNameInput.addEventListener('input', updatePreviews);
 freetextInput.addEventListener('input', updatePreviews);
 composedTabButton.addEventListener('shown.bs.tab', updatePreviews);
 freetextTabButton.addEventListener('shown.bs.tab', updatePreviews);
-shareButton.addEventListener('click', shareRenamed);
+shareButton.addEventListener('click', shareRenamedFile);
 resetButton.addEventListener('click', resetInputs);
+
+// When switching to freetext: pre-fill the input with the composed result so
+// the user can switch tabs and continue editing rather than starting from scratch.
+freetextTabButton.addEventListener('show.bs.tab', () => {
+	const composedFilename = buildComposedFilename();
+	if (composedFilename) {
+		freetextInput.value = composedFilename;
+	}
+	freetextInput.placeholder = originalName;
+	updatePreviews();
+});
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 async function initialize() {
-	const fileWasShared = await loadSharedFile();
+	if ('serviceWorker' in navigator) {
+		navigator.serviceWorker.register('./service-worker.js').catch(console.error);
+	}
+
+	// Request persistent storage — on older Android Chrome this can prompt the
+	// user to grant the storage permission needed for file sharing.
+	navigator.storage?.persist?.();
+
+	const [fileWasShared] = await Promise.all([
+		loadSharedFile(),
+		initializeTranslations(),
+	]);
+
+	applyTranslations();
+
 	if (fileWasShared) {
 		renameUiElement.classList.remove('d-none');
 		resetInputs();
@@ -171,7 +186,7 @@ async function initialize() {
 	} else {
 		idleScreenElement.classList.remove('d-none');
 		if (location.search.includes('error=no-file')) {
-			setStatus('No file was received.', 'text-danger');
+			setStatus(translate('statusNoFile'), 'text-danger');
 		}
 	}
 }

@@ -61,7 +61,7 @@ flowchart LR
 
 Example: `260312-Fancy-Webshop-Laptop-receipt-123456.pdf`
 
-**Freetext** — a single free-form text field. When you switch from Composed to Freetext, the composed result is pre-filled as a starting point.
+**Freetext** — a single free-form text field. Switching from Composed to Freetext copies the composed result into the field as an editable starting point, so you can refine it without retyping.
 
 Both modes show a live preview of the resulting filename.
 
@@ -81,6 +81,10 @@ The app must be installed as a PWA for it to appear in the Android share sheet.
 3. Select **Rename & Share** from the share sheet.
 4. Enter the new name and tap **Rename & Share**.
 5. The share sheet opens again — select **Nextcloud** (or any other target).
+
+## Languages
+
+The UI is automatically displayed in the user's browser language. Supported languages: **English, German (Deutsch), Spanish (Español), Portuguese (Português)**. Falls back to English for any other language.
 
 ## Deploy
 
